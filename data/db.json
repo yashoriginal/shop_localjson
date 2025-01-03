@@ -1,0 +1,22 @@
+{
+  "bills": [
+    {
+      "id": "1",
+      "name": "Yaswanth",
+      "amount": "20000",
+      "date": "12-30-2023"
+    },
+    {
+      "id": "2",
+      "name": "Padmesh",
+      "amount": "10000",
+      "date": "12-30-2023"
+    },
+    {
+      "id": "3",
+      "name": "Kishore",
+      "amount": "10000",
+      "date": "01-02-2025"
+    }
+  ]
+}
