@@ -10,8 +10,11 @@ export const DataProvider = ({ children }) => {
   const [bills, setBills] = useState([]);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
-  const navigate = useNavigate()
- 
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const navigate = useNavigate();
+
   const { data, fetchError, isLoading } = useAxiosFetch(
     "http://localhost:3500/bills"
   );
@@ -19,12 +22,22 @@ export const DataProvider = ({ children }) => {
     setBills(data);
   }, [data]);
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    const filteredBills = bills.filter(
+      (bill) =>
+        bill.name.toLowerCase().includes(search.toLowerCase()) ||
+        bill.amount.toLowerCase().includes(search.toLowerCase())
+    );
+    setSearchResults(filteredBills);
+  };
+
   const handleDelete = async (id) => {
     try {
       await api.delete(`/bills/${id}`);
       const billsList = bills.filter((bill) => bill.id !== id);
       setBills(billsList);
-      navigate("/bills")
+      navigate("/bills");
     } catch (err) {
       console.log(`Error: ${err.message}`);
     }
@@ -51,7 +64,6 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-
   return (
     <DataContext.Provider
       value={{
@@ -62,7 +74,11 @@ export const DataProvider = ({ children }) => {
         amount,
         setName,
         setAmount,
-        handleSubmit
+        handleSubmit,
+        handleSearch,
+        searchResults,
+        search,
+        setSearchResults,
       }}
     >
       {children}
