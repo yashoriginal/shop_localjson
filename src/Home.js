@@ -8,11 +8,10 @@ export default function Home() {
   const [sum, setSum] = useState("");
   const [billAmount, setBillAmount] = useState("");
 
-  const [totalAmount, setTotalAmount] = useState();
+  const [totalAmount, setTotalAmount] = useState("");
   const handleCalculate = () => {
     const bill = bills.find((bill) => bill.id == billNum);
     setBillAmount(bill.amount);
-
     const currentdatetime = format(new Date(), "MM-dd-yyyy");
     const currentdate = format(new Date(), "dd");
     const date = format(bill.date, "dd");
@@ -27,7 +26,7 @@ export default function Home() {
     }
     setSum(((monthsdiff * 2) / 100) * bill.amount);
     monthsdiff = 0;
-    setTotalAmount(+bill.amount + sum);
+    setTotalAmount(+sum + billAmount);
   };
   return (
     <div className="form-container">
@@ -50,7 +49,7 @@ export default function Home() {
           <div className="form-group">
             <label htmlFor="sum">Loan amount = {billAmount}</label>
             <label htmlFor="sum">Intereset = {sum}</label>
-            <label htmlFor="sum">Total amount = {totalAmount}</label>
+            <label htmlFor="sum">Total amount = {+billAmount + sum}</label>
           </div>
         ) : undefined}
 
