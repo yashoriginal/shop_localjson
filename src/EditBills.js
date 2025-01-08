@@ -1,23 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useParams } from "react-router-dom";
 import DataContext from "./context/DataContext";
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import api from "./api/bills";
 import { format } from "date-fns";
-export default function EditBills() {
-  const [editName, setEditName] = useState("");
-  const [editAmount, setEditAmount] = useState("");
-  const { bills, setBills } = useContext(DataContext);
+import api from "./api/bills";
 
+export default function EditBills() {
+  const { bills, setBills } = useContext(DataContext);
   const { id } = useParams();
   const bill = bills.find((bill) => bill.id.toString() === id);
-
-  useEffect(() => {
-    if (bill) {
-      setEditName(bill.name);
-      setEditAmount(bill.amount);
-    }
-  }, [bill, setEditName, setEditAmount]);
+  const [editName, setEditName] = useState(bill.name);
+  const [editAmount, setEditAmount] = useState(bill.amount);
 
   const handleEdit = async (id) => {
     const datetime = format(new Date(), "MM-dd-yyyy");
@@ -33,17 +25,17 @@ export default function EditBills() {
       setBills(
         bills.map((bill) => (bill.id === id ? { ...response.data } : bill))
       );
-      setEditName(null);
-      setEditAmount(null);
-      console.log(editName, editAmount);
+      setEditName("");
+      setEditAmount("");
     } catch (err) {
       console.log(`Error: ${err.message}`);
     }
   };
   return (
     <div className="form-container">
-      {editName && (
+      {bill && (
         <>
+          {" "}
           <h2>Edit Bill</h2>
           <form className="form" onSubmit={(e) => e.preventDefault()}>
             <div className="form-group">
@@ -73,17 +65,7 @@ export default function EditBills() {
             >
               Save
             </button>
-          </form>
-        </>
-      )}
-
-      {!editName && (
-        <>
-          <h2>Bill Not Found</h2>
-          <p>Well, that's disappointing.</p>
-          <p>
-            <Link to="/bills">Visit to View Bils again</Link>
-          </p>
+          </form>{" "}
         </>
       )}
     </div>
