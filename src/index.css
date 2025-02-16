@@ -109,9 +109,12 @@ img {
 }
 
 /* Typography */
+
+h3 {
+  color: #1a1a2e;
+}
 h1,
 h2,
-h3,
 h4,
 h5,
 h6 {
