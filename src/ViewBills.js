@@ -3,11 +3,21 @@ import DataContext from "./context/DataContext";
 import { Link } from "react-router-dom";
 
 export default function ViewBills() {
-  const { bills, search, handleSearch, searchResults, setSearchResults } =
-    useContext(DataContext);
+  const {
+    bills,
+    search,
+    handleSearch,
+    searchResults,
+    setSearchResults,
+    fetchError,
+    isLoading,
+  } = useContext(DataContext);
   useEffect(() => {
     setSearchResults(bills);
-  }, [bills]);
+  }, [bills, setSearchResults]);
+
+  if (isLoading) return <p>Loading bills...</p>;
+  if (fetchError) return <p className="text-red-500">Error: {fetchError}</p>;
 
   return (
     <div className="list-container">

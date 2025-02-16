@@ -9,8 +9,9 @@ import { DataProvider } from "./context/DataContext";
 import BillPage from "./BillPage";
 import ViewBills from "./ViewBills";
 import EditBills from "./EditBills";
+import About from "./About.js";
 
-export default function App() {
+function App() {
   return (
     <div className="App">
       <DataProvider>
@@ -22,9 +23,12 @@ export default function App() {
           <Route path="/bills" element={<ViewBills />} />
           <Route path="/bills/:id" element={<BillPage />}></Route>
           <Route path="/editbills/:id" element={<EditBills />}></Route>
+          <Route path="/about" element={<About />}></Route>
         </Routes>
         <Footer />
       </DataProvider>
     </div>
   );
 }
+
+export default App;

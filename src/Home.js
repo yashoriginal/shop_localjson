@@ -10,7 +10,7 @@ export default function Home() {
 
   const [totalAmount, setTotalAmount] = useState("");
   const handleCalculate = () => {
-    const bill = bills.find((bill) => bill.id == billNum);
+    const bill = bills.find((bill) => bill.id === billNum);
     setBillAmount(bill.amount);
     const currentdatetime = format(new Date(), "MM-dd-yyyy");
     const currentdate = format(new Date(), "dd");
@@ -18,13 +18,19 @@ export default function Home() {
     let monthsdiff = 0;
     if (date > currentdate) {
       monthsdiff = monthsdiff + differenceInMonths(currentdatetime, bill.date);
-    } else if (date == currentdate) {
+    } else if (date === currentdate) {
       monthsdiff =
         monthsdiff + differenceInMonths(currentdatetime, bill.date) - 1;
     } else {
       monthsdiff = monthsdiff + differenceInMonths(currentdatetime, bill.date);
     }
-    setSum(((monthsdiff * 2) / 100) * bill.amount);
+    console.log(monthsdiff);
+    if (monthsdiff < 0) {
+      setSum(0);
+    } else {
+      setSum(((monthsdiff * 2) / 100) * bill.amount);
+    }
+
     monthsdiff = 0;
     setTotalAmount(+sum + billAmount);
   };

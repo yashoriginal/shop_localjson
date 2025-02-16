@@ -79,6 +79,8 @@ export const DataProvider = ({ children }) => {
         searchResults,
         search,
         setSearchResults,
+        fetchError,
+        isLoading,
       }}
     >
       {children}
